@@ -3,6 +3,7 @@
  */
 
 import java.util.Scanner;
+import java.util.HashSet;
 
 public class isUnique {
     /*
@@ -23,7 +24,8 @@ public class isUnique {
             if (testString.length() == 0) {
                 System.out.println("Please enter an input!");
             } else {
-                boolean isUnique = testUnique(testString);
+                //boolean isUnique = testUnique(testString);
+                boolean isUnique = testUniqueHash(testString);
 
                 if (isUnique) {
                     System.out.println("All the characters are unique!");
@@ -46,7 +48,7 @@ public class isUnique {
         }
     }
 
-    // Method iterating through the characters and checking each one by one
+    // Brute force method iterating through the characters and checking each one by one
     private static boolean testUnique(String testString) {
         for (int i=0; i<testString.length(); i++) {
             char temp = testString.charAt(i);
@@ -56,6 +58,30 @@ public class isUnique {
                 }
             }
         }
+        return true;
+    }
+
+    // More efficient solution utilizing a Java HashSet to check for duplicates
+    // Added additional check for spaces
+    private static boolean testUniqueHash(String testString) {
+        // initialize hashset and temporary string
+        HashSet<String> charSet = new HashSet<>();
+        String temp;
+
+        // loop checking each character against the HashSet and adding it if it is not found
+        for (int i=0; i<testString.length(); i++) {
+            temp = testString.substring(i, i+1);
+            if (temp.equals(" ")) {
+                continue;
+            }
+            System.out.println(temp);
+            if (charSet.contains(temp)) {
+                return false;
+            } else {
+                charSet.add(temp);
+            }
+        }
+
         return true;
     }
 }
